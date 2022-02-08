@@ -1,0 +1,16 @@
+Country,kernel,C,class_weight,gamma,Tuning F1
+Venezuela,rbf,1.0,balanced,0.1,0.538
+Venezuela,rbf,403.429,balanced,0.0001,0.541
+Venezuela,rbf,1.0,balanced,0.1,0.558
+Venezuela,rbf,148.413,balanced,auto,0.499
+Venezuela,sigmoid,54.598,balanced,0.001,0.527
+Ghana,rbf,20.086,balanced,0.01,0.674
+Ghana,rbf,2980.958,balanced,0.0001,0.666
+Ghana,sigmoid,2.718,balanced,0.1,0.657
+Ghana,rbf,148.413,balanced,0.001,0.671
+Ghana,sigmoid,20.086,balanced,0.01,0.684
+Philippines,rbf,2980.958,balanced,0.0001,0.521
+Philippines,rbf,148.413,,0.01,0.551
+Philippines,sigmoid,2980.958,,0.001,0.569
+Philippines,rbf,20.086,balanced,0.01,0.547
+Philippines,rbf,20.086,balanced,0.1,0.55

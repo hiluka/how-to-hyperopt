@@ -1,0 +1,4 @@
+Country,Accuracy,Accuracy Std. Dev.,Precision,Precision Std. Dev.,Recall,Recall Std. Dev.,F1,F1 Std. Dev.
+Venezuela,0.929,0.006,0.41,0.032,0.638,0.065,0.498,0.038
+Ghana,0.944,0.012,0.555,0.087,0.725,0.054,0.624,0.057
+Philippines,0.953,0.006,0.544,0.089,0.522,0.153,0.505,0.048
