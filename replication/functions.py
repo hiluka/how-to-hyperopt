@@ -5,6 +5,12 @@ import regex as re
 import string
 from datetime import datetime
 import nltk
+import os
+import pandas as pd
+import tensorflow as tf
+import numpy as np
+import keras.backend as K
+import keras_tuner
 
 import tensorflow as tf
 from tensorflow.keras.models import Sequential
@@ -19,6 +25,19 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.pipeline import Pipeline
 from sklearn.svm import SVC
 from sklearn import metrics
+
+from keras_tuner import HyperModel, Objective
+from keras_tuner.tuners import RandomSearch, Hyperband
+from keras.models import Sequential, Model
+from keras.layers import Dense, concatenate
+from keras.wrappers.scikit_learn import KerasClassifier
+
+from gensim import models
+import gensim.downloader as api
+from nltk.corpus import stopwords
+from nltk.stem.snowball import EnglishStemmer, SpanishStemmer
+
+from functions import *
 
 def preprocess_data(dataset_path, stops, stemmer):
     def preprocess_tweet(tweet, stops, stemmer):
@@ -220,11 +239,9 @@ def run_3filter_CNN(X_train, X_test, y_train, y_test, CNN_params, country, param
         Conv2D(filters=CNN_params["filters"], kernel_size=(kernels[2], n_embeddings), activation='relu'))
     model3.add(GlobalMaxPooling2D())
 
-    # model_concat = concatenate([model1.output, model2.output, model3.output], axis=3)
+
     model_concat = concatenate([model1.output, model2.output, model3.output])
-    # # model_concat = MaxPooling1D()(model_concat)
     model_concat = Dropout(CNN_params["dropout"])(model_concat)
-    # # model_concat = Flatten()(model_concat)
     model_concat = Dense(1, activation='sigmoid', kernel_regularizer=regularizers.L2(CNN_params["l2_reg_lambda"]))(model_concat)
     model = Model(inputs=[model1.input, model2.input, model3.input], outputs=model_concat)
 
@@ -240,3 +257,152 @@ def run_3filter_CNN(X_train, X_test, y_train, y_test, CNN_params, country, param
     #print results
     results = print_stats(y_test, y_pred, model = "{c}_CNN_{p}".format(p=param_setting, c=country))
     return results
+
+def tune_model(X_train, y_train, model="", runs=100, epochs=80, X_val=None, y_val=None):
+
+    # set params for the hyper parameter tuning
+    NUM_CLASSES = 2
+    INPUT_SHAPE = (X_train.shape[1], X_train.shape[2],1)
+    EXECUTION_PER_TRIAL = 1
+    SEED = 2021
+    
+    print("input", INPUT_SHAPE)
+    
+    # create validation set
+    X_train, X_val, y_train, y_val = train_test_split(X_train, y_train, test_size=0.2, stratify=y_train,
+                                                      random_state=2021)
+
+    class CNNHyperModel(HyperModel):
+        def __init__(self, input_shape, num_classes):
+            self.input_shape = input_shape
+            self.num_classes = num_classes
+
+        def build(self, hp):
+            print(self.input_shape)
+            
+            ratio_1 = 1.0 - len(y_train[y_train == 1]) / float(len(y_train))  ## ratio of violence instances
+            ratio_0 = 1.0 - ratio_1
+
+            class_weight = {0: ratio_0, 1: ratio_1}
+
+            print(datetime.now().strftime("%H:%M:%S"), ": Start Training CNN")
+
+            n_words = X_train.shape[1]
+            n_embeddings = X_train.shape[2]
+            
+            n_filters = hp.Choice('filters', values=[50, 100, 150, 200, 250], default=200)
+            
+            model1 = Sequential()
+            model1.add(Input(shape=(n_words,n_embeddings,1)))
+            model1.add(Conv2D(filters=n_filters, kernel_size=(hp.Choice('kernel1', values=[1, 2, 3], default=1), n_embeddings), activation='relu'))
+            model1.add(GlobalMaxPooling2D())
+             
+            model2 = Sequential()
+            model2.add(Input(shape=(n_words,n_embeddings,1)))
+            model2.add(Conv2D(filters=n_filters, kernel_size=(hp.Choice('kernel2', values=[3, 4, 5], default=3), n_embeddings), activation='relu'))
+            model2.add(GlobalMaxPooling2D())
+            
+            model3 = Sequential()
+            model3.add(Input(shape=(n_words,n_embeddings,1)))
+            model3.add(Conv2D(filters=n_filters, kernel_size=(hp.Choice('kernel3', values=[5,6,7], default=5), n_embeddings), activation='relu'))
+            model3.add(GlobalMaxPooling2D())
+
+            model_concat = concatenate([model1.output, model2.output, model3.output])
+            model_concat = Dropout(hp.Choice('dropout', values=[0.1, 0.2, 0.3, 0.5], default=0.2))(model_concat)
+            model_concat = Dense(1, activation='sigmoid', kernel_regularizer=regularizers.L2(hp.Choice('l2_reg_lambda', values=[0.001, 0.01, 0.1], default=0.01)))(model_concat)
+            model = Model(inputs=[model1.input, model2.input, model3.input], outputs=model_concat)
+            
+            model.compile(loss='binary_crossentropy', optimizer=tf.keras.optimizers.Adam(hp.Choice('learning_rate', values=[0.01, 0.005, 0.001, 0.0005, 0.0001])), metrics=[tf.keras.metrics.AUC()])
+    
+            return model
+
+    hypermodel = CNNHyperModel(input_shape=INPUT_SHAPE, num_classes=NUM_CLASSES)
+ 
+    tuner = RandomSearch(hypermodel,
+                        objective=keras_tuner.Objective("auc", direction="min"),
+                        seed=SEED,
+                        max_trials=runs,
+                        executions_per_trial=EXECUTION_PER_TRIAL,
+                        directory='random_search',
+                        project_name="cnn",
+                        tune_new_entries=True,
+                        allow_new_entries=True)
+
+    tuner.search([X_train, X_train, X_train], y_train, epochs=epochs, validation_data=([X_val, X_val, X_val], y_val))
+
+    # Show a summary of the search
+    print(tuner.results_summary())
+
+def tune_model_cv(X_train_vec, y_train_vec, model="", runs=100, epochs=80, X_val=None, y_val=None):
+
+    # set params for the hyper parameter tuning
+    NUM_CLASSES = 2
+    INPUT_SHAPE = (X_train_vec.shape[1], X_train_vec.shape[2],1)
+
+    # create validation set
+    X_train, X_val, y_train, y_val = train_test_split(X_train_vec, y_train_vec, test_size=0.2, stratify=y_train_vec,
+                                                      random_state=2022)
+
+    class CNNHyperModel(HyperModel):
+        def __init__(self, input_shape, num_classes):
+            self.input_shape = input_shape
+            self.num_classes = num_classes
+
+        def build(self, hp):
+            print(self.input_shape)
+            
+            ratio_1 = 1.0 - len(y_train[y_train == 1]) / float(len(y_train))  ## ratio of violence instances
+            ratio_0 = 1.0 - ratio_1
+
+            class_weight = {0: ratio_0, 1: ratio_1}
+
+            print(datetime.now().strftime("%H:%M:%S"), ": Start Training CNN")
+
+            n_words = X_train_vec.shape[1]
+            n_embeddings = X_train_vec.shape[2]
+            
+            n_filters = hp.Choice('filters', values=[100, 150, 200, 250], default=200)
+            kernel =  hp.Choice('kernel', values=[1,2,3], default=1)
+            
+            model1 = Sequential()
+            model1.add(Input(shape=(n_words,n_embeddings,1)))
+            model1.add(Conv2D(filters=n_filters, kernel_size=(kernel, n_embeddings), activation='relu'))
+            model1.add(GlobalMaxPooling2D())
+             
+            model2 = Sequential()
+            model2.add(Input(shape=(n_words,n_embeddings,1)))
+            model2.add(Conv2D(filters=n_filters, kernel_size=(kernel+1, n_embeddings), activation='relu'))
+            model2.add(GlobalMaxPooling2D())
+            
+            model3 = Sequential()
+            model3.add(Input(shape=(n_words,n_embeddings,1)))
+            model3.add(Conv2D(filters=n_filters, kernel_size=(kernel+2, n_embeddings), activation='relu'))
+            model3.add(GlobalMaxPooling2D())
+
+            model_concat = concatenate([model1.output, model2.output, model3.output])
+            model_concat = Dropout(hp.Choice('dropout', values=[0.1, 0.3, 0.5], default=0.5))(model_concat)
+            model_concat = Dense(1, activation='sigmoid', kernel_regularizer=regularizers.L2(hp.Choice('l2_reg_lambda', values=[0.001, 0.01, 0.1], default=0.01)))(model_concat)
+            model = Model(inputs=[model1.input, model2.input, model3.input], outputs=model_concat)
+            
+            model.compile(loss='binary_crossentropy', optimizer=tf.keras.optimizers.Adam(hp.Choice('learning_rate', values=[0.01, 0.005, 0.001, 0.0005, 0.0001], default=0.001)), metrics=[tf.keras.metrics.AUC()])
+    
+            return model
+
+    hypermodel = CNNHyperModel(input_shape=INPUT_SHAPE, num_classes=NUM_CLASSES)
+ 
+    tuner = RandomSearch(hypermodel,
+                        objective=keras_tuner.Objective("auc", direction="min"),
+                        seed=2022,
+                        max_trials=runs,
+                        executions_per_trial=1,
+                        directory='random_search_cv',
+                        project_name="cnn"+model,
+                        overwrite=False,
+                        tune_new_entries=True,
+                        allow_new_entries=True)
+
+    tuner.search([X_train_vec, X_train_vec, X_train_vec], y_train_vec, epochs=epochs, validation_data=([X_val, X_val, X_val], y_val))
+
+    # Show a summary of the search
+    return tuner
+

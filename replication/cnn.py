@@ -94,7 +94,8 @@ for country, path in countries.items():
         #run CNN in 3 different configurations
         for param in params:
             results.append(run_3filter_CNN(X_train_vec, X_test_vec, y_train, y_test, param, param_setting=param["name"], country=country))
-
+        
+        print(results)
         i+=1
         
 #combine all results and calculate summary statistics
