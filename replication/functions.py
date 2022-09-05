@@ -128,6 +128,51 @@ def run_svc(X_train_tfidf, X_test_tfidf, y_train, y_test):
 
     return [test_accuracy, test_precision, test_recall, test_f1], [grid_search.best_params_["svc__kernel"], grid_search.best_params_["svc__C"], grid_search.best_params_["svc__class_weight"], grid_search.best_params_["svc__gamma"], grid_search.best_score_]
 
+def only_run_svc(X_train_tfidf, X_test_tfidf, y_train, y_test, country, run):
+    
+    hp_df = pd.read_csv("svm_results_hyperparameter.csv")
+    hp_df = hp_df.loc[hp_df["Country"]==country].reset_index(drop=True)
+    
+    try:
+        g = float(hp_df["gamma"].iloc[run])
+    except:
+        g = hp_df["gamma"].iloc[run]
+        
+    b = "balanced" if hp_df["class_weight"].iloc[run] == "balanced" else ""
+
+    best_svc = SVC(C=hp_df["C"].iloc[run],
+                   gamma=g,
+                   kernel=hp_df["kernel"].iloc[run],
+                   class_weight=b,
+                   random_state=20211010)
+    best_svc.fit(X_train_tfidf, y_train)
+
+    predictions = best_svc.predict(X_test_tfidf)
+    test_accuracy = metrics.accuracy_score(y_test, predictions)
+    test_precision = metrics.precision_score(y_test, predictions, average='binary')
+    test_recall = metrics.recall_score(y_test, predictions, average='binary')
+    test_f1 = metrics.f1_score(y_test, predictions, average='binary')
+
+    return [test_accuracy, test_precision, test_recall, test_f1]
+
+
+
+def untuned_svc(X_train_tfidf, X_test_tfidf, y_train, y_test, country, run):
+    
+    best_svc = SVC(C=1,
+                   kernel="linear",
+                   random_state=20211010)
+    best_svc.fit(X_train_tfidf, y_train)
+
+    predictions = best_svc.predict(X_test_tfidf)
+    test_accuracy = metrics.accuracy_score(y_test, predictions)
+    test_precision = metrics.precision_score(y_test, predictions, average='binary')
+    test_recall = metrics.recall_score(y_test, predictions, average='binary')
+    test_f1 = metrics.f1_score(y_test, predictions, average='binary')
+
+    return [test_accuracy, test_precision, test_recall, test_f1]
+
+
 
 def print_stats(labels, predictions, model="Not specified", country=None):
 
@@ -319,7 +364,7 @@ def tune_model(X_train, y_train, model="", runs=100, epochs=80, X_val=None, y_va
     hypermodel = CNNHyperModel(input_shape=INPUT_SHAPE, num_classes=NUM_CLASSES)
  
     tuner = RandomSearch(hypermodel,
-                        objective=keras_tuner.Objective("auc", direction="min"),
+                        objective=keras_tuner.Objective("auc", direction="max"),
                         seed=SEED,
                         max_trials=runs,
                         executions_per_trial=EXECUTION_PER_TRIAL,
@@ -361,7 +406,7 @@ def tune_model_cv(X_train_vec, y_train_vec, model="", runs=100, epochs=80, X_val
             n_words = X_train_vec.shape[1]
             n_embeddings = X_train_vec.shape[2]
             
-            n_filters = hp.Choice('filters', values=[100, 150, 200, 250], default=200)
+            n_filters = hp.Choice('filters', values=[150, 200, 250], default=200)
             kernel =  hp.Choice('kernel', values=[1,2,3], default=1)
             
             model1 = Sequential()
@@ -380,22 +425,22 @@ def tune_model_cv(X_train_vec, y_train_vec, model="", runs=100, epochs=80, X_val
             model3.add(GlobalMaxPooling2D())
 
             model_concat = concatenate([model1.output, model2.output, model3.output])
-            model_concat = Dropout(hp.Choice('dropout', values=[0.1, 0.3, 0.5], default=0.5))(model_concat)
+            model_concat = Dropout(hp.Choice('dropout', values=[0.5, 0.8], default=0.5))(model_concat)
             model_concat = Dense(1, activation='sigmoid', kernel_regularizer=regularizers.L2(hp.Choice('l2_reg_lambda', values=[0.001, 0.01, 0.1], default=0.01)))(model_concat)
             model = Model(inputs=[model1.input, model2.input, model3.input], outputs=model_concat)
             
-            model.compile(loss='binary_crossentropy', optimizer=tf.keras.optimizers.Adam(hp.Choice('learning_rate', values=[0.01, 0.005, 0.001, 0.0005, 0.0001], default=0.001)), metrics=[tf.keras.metrics.AUC()])
+            model.compile(loss='binary_crossentropy', optimizer=tf.keras.optimizers.Adam(hp.Choice('learning_rate', values=[0.01, 0.001, 0.0001], default=0.001)), metrics=[tf.keras.metrics.AUC()])
     
             return model
 
     hypermodel = CNNHyperModel(input_shape=INPUT_SHAPE, num_classes=NUM_CLASSES)
  
     tuner = RandomSearch(hypermodel,
-                        objective=keras_tuner.Objective("auc", direction="min"),
+                        objective=keras_tuner.Objective("auc", direction="max"),
                         seed=2022,
                         max_trials=runs,
                         executions_per_trial=1,
-                        directory='random_search_cv',
+                        directory='random_search_cv_final',
                         project_name="cnn"+model,
                         overwrite=False,
                         tune_new_entries=True,
