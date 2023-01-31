@@ -25,6 +25,8 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.pipeline import Pipeline
 from sklearn.svm import SVC
 from sklearn import metrics
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.dummy import DummyClassifier
 
 from keras_tuner import HyperModel, Objective
 from keras_tuner.tuners import RandomSearch, Hyperband
@@ -75,10 +77,33 @@ def load_data(data, seed):
     X_test_vec = tfidf_vectorizer.transform(X_test)
     
     return X_train_vec, X_test_vec, y_train, y_test
-
-def run_svc(X_train_tfidf, X_test_tfidf, y_train, y_test):
+    
+def run_dummy(X_train_tfidf, X_test_tfidf, y_train, y_test):
+    dummy_clf = DummyClassifier(strategy="uniform", random_state=20211010)
+    dummy_clf.fit(X_train_tfidf, y_train)
+  
+    predictions = dummy_clf.predict(X_test_tfidf)
+    test_accuracy = metrics.accuracy_score(y_test, predictions)
+    test_precision = metrics.precision_score(y_test, predictions, average='binary')
+    test_recall = metrics.recall_score(y_test, predictions, average='binary')
+    test_f1 = metrics.f1_score(y_test, predictions, average='binary')
+    
+    return [test_accuracy, test_precision, test_recall, test_f1]
+        
+def run_svc(X_train_tfidf, X_test_tfidf, y_train, y_test, tune = True):
     # Define initial SVC model
     svc = SVC(random_state=20211010)
+    
+    if (not tune):
+        svc.fit(X_train_tfidf, y_train)
+        
+        predictions = svc.predict(X_test_tfidf)
+        test_accuracy = metrics.accuracy_score(y_test, predictions)
+        test_precision = metrics.precision_score(y_test, predictions, average='binary')
+        test_recall = metrics.recall_score(y_test, predictions, average='binary')
+        test_f1 = metrics.f1_score(y_test, predictions, average='binary')
+        
+        return [test_accuracy, test_precision, test_recall, test_f1]
 
     # Define pipeline for tuning grid
     pipeline = Pipeline(steps=[("svc", svc)])
@@ -102,7 +127,7 @@ def run_svc(X_train_tfidf, X_test_tfidf, y_train, y_test):
     stratified_5_fold_cv = StratifiedKFold(n_splits=5, shuffle=True, random_state=20211010)
 
     # Perform grid search on isolated validation set
-    grid_search = GridSearchCV(pipeline, param_grid, cv=stratified_5_fold_cv, verbose=2, n_jobs=-1, scoring="f1")
+    grid_search = GridSearchCV(pipeline, param_grid, cv=stratified_5_fold_cv, verbose=1, n_jobs=-1, scoring="f1")
     grid_search.fit(X_train_tfidf, y_train)
 
     # get the best parameter setting
@@ -127,6 +152,61 @@ def run_svc(X_train_tfidf, X_test_tfidf, y_train, y_test):
     test_f1 = metrics.f1_score(y_test, predictions, average='binary')
 
     return [test_accuracy, test_precision, test_recall, test_f1], [grid_search.best_params_["svc__kernel"], grid_search.best_params_["svc__C"], grid_search.best_params_["svc__class_weight"], grid_search.best_params_["svc__gamma"], grid_search.best_score_]
+
+def run_randomforest(X_train_tfidf, X_test_tfidf, y_train, y_test, tune = True):
+    # Define initial Random Forest model
+    randomforest = RandomForestClassifier(random_state=20211010)
+    
+    if (not tune):
+        randomforest.fit(X_train_tfidf, y_train)
+        
+        predictions = randomforest.predict(X_test_tfidf)
+        test_accuracy = metrics.accuracy_score(y_test, predictions)
+        test_precision = metrics.precision_score(y_test, predictions, average='binary')
+        test_recall = metrics.recall_score(y_test, predictions, average='binary')
+        test_f1 = metrics.f1_score(y_test, predictions, average='binary')
+        
+        return [test_accuracy, test_precision, test_recall, test_f1]
+
+    # Define pipeline for tuning grid
+    pipeline = Pipeline(steps=[("randomforest", randomforest)])
+
+    # Define parameter combinations for max_depth, n_estimators, class_weight and max_features
+    param_grid = [
+        {
+            "randomforest__max_depth": [1, 5, 25, 50, 75, 100, 150, 200, 400, 1000, None],
+            "randomforest__n_estimators": [1, 5, 15, 50, 75, 100, 150, 200, 400, 1000],
+            "randomforest__class_weight": [None, "balanced"],
+            "randomforest__max_features": ["sqrt", "log2", None]
+        }
+    ]
+
+    # specify the cross validation
+    stratified_5_fold_cv = StratifiedKFold(n_splits=5, shuffle=True, random_state=20211010)
+
+    # Perform grid search on isolated validation set
+    grid_search = GridSearchCV(pipeline, param_grid, cv=stratified_5_fold_cv, verbose=1, n_jobs=-1, scoring="f1")
+    grid_search.fit(X_train_tfidf, y_train)
+
+    # get the best parameter setting
+    print(
+        "Best Tuning Score is {} with params {}".format(grid_search.best_score_,
+                                                        grid_search.best_params_))
+
+    best_rf = RandomForestClassifier(max_depth=grid_search.best_params_["randomforest__max_depth"],
+                   n_estimators=grid_search.best_params_["randomforest__n_estimators"],
+                   class_weight=grid_search.best_params_["randomforest__class_weight"],
+                   max_features=grid_search.best_params_["randomforest__max_features"],
+                   random_state=20211010)
+    best_rf.fit(X_train_tfidf, y_train)
+
+    predictions = best_rf.predict(X_test_tfidf)
+    test_accuracy = metrics.accuracy_score(y_test, predictions)
+    test_precision = metrics.precision_score(y_test, predictions, average='binary')
+    test_recall = metrics.recall_score(y_test, predictions, average='binary')
+    test_f1 = metrics.f1_score(y_test, predictions, average='binary')
+
+    return [test_accuracy, test_precision, test_recall, test_f1], [grid_search.best_params_["randomforest__max_depth"], grid_search.best_params_["randomforest__n_estimators"], grid_search.best_params_["randomforest__class_weight"], grid_search.best_params_["randomforest__max_features"], grid_search.best_score_]
 
 def only_run_svc(X_train_tfidf, X_test_tfidf, y_train, y_test, country, run):
     
