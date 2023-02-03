@@ -27,6 +27,7 @@ from sklearn.svm import SVC
 from sklearn import metrics
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.dummy import DummyClassifier
+from sklearn.naive_bayes import GaussianNB
 
 from keras_tuner import HyperModel, Objective
 from keras_tuner.tuners import RandomSearch, Hyperband
@@ -208,6 +209,55 @@ def run_randomforest(X_train_tfidf, X_test_tfidf, y_train, y_test, tune = True):
 
     return [test_accuracy, test_precision, test_recall, test_f1], [grid_search.best_params_["randomforest__max_depth"], grid_search.best_params_["randomforest__n_estimators"], grid_search.best_params_["randomforest__class_weight"], grid_search.best_params_["randomforest__max_features"], grid_search.best_score_]
 
+def run_naivebayes(X_train_tfidf, X_test_tfidf, y_train, y_test, tune = True):
+    # Define initial Naive Bayes model
+    naivebayes = GaussianNB(random_state=20211010)
+    
+    if (not tune):
+        naivebayes.fit(X_train_tfidf, y_train)
+        
+        predictions = naivebayes.predict(X_test_tfidf)
+        test_accuracy = metrics.accuracy_score(y_test, predictions)
+        test_precision = metrics.precision_score(y_test, predictions, average='binary')
+        test_recall = metrics.recall_score(y_test, predictions, average='binary')
+        test_f1 = metrics.f1_score(y_test, predictions, average='binary')
+        
+        return [test_accuracy, test_precision, test_recall, test_f1]
+
+    # Define pipeline for tuning grid
+    pipeline = Pipeline(steps=[("naivebayes", naivebayes)])
+
+    # Define parameter combinations for var smoothing
+    param_grid = [
+        {
+            "naivebayes__var_smoothing": np.logspace(0, -9, num=100)
+        }
+    ]
+
+    # specify the cross validation
+    stratified_5_fold_cv = StratifiedKFold(n_splits=5, shuffle=True, random_state=20211010)
+
+    # Perform grid search on isolated validation set
+    grid_search = GridSearchCV(pipeline, param_grid, cv=stratified_5_fold_cv, verbose=1, n_jobs=-1, scoring="f1")
+    grid_search.fit(X_train_tfidf, y_train)
+
+    # get the best parameter setting
+    print(
+        "Best Tuning Score is {} with params {}".format(grid_search.best_score_,
+                                                        grid_search.best_params_))
+
+    best_naivebayes = naivebayes(var_smoothing=grid_search.best_params_["naivebayes__var_smoothing"],
+                          random_state=20211010)
+    best_naivebayes.fit(X_train_tfidf, y_train)
+
+    predictions = best_naivebayes.predict(X_test_tfidf)
+    test_accuracy = metrics.accuracy_score(y_test, predictions)
+    test_precision = metrics.precision_score(y_test, predictions, average='binary')
+    test_recall = metrics.recall_score(y_test, predictions, average='binary')
+    test_f1 = metrics.f1_score(y_test, predictions, average='binary')
+
+    return [test_accuracy, test_precision, test_recall, test_f1], [grid_search.best_params_["naivebayes__var_smoothing"], grid_search.best_score_]
+
 def only_run_svc(X_train_tfidf, X_test_tfidf, y_train, y_test, country, run):
     
     hp_df = pd.read_csv("svm_results_hyperparameter.csv")
@@ -234,24 +284,6 @@ def only_run_svc(X_train_tfidf, X_test_tfidf, y_train, y_test, country, run):
     test_f1 = metrics.f1_score(y_test, predictions, average='binary')
 
     return [test_accuracy, test_precision, test_recall, test_f1]
-
-
-
-def untuned_svc(X_train_tfidf, X_test_tfidf, y_train, y_test, country, run):
-    
-    best_svc = SVC(C=1,
-                   kernel="linear",
-                   random_state=20211010)
-    best_svc.fit(X_train_tfidf, y_train)
-
-    predictions = best_svc.predict(X_test_tfidf)
-    test_accuracy = metrics.accuracy_score(y_test, predictions)
-    test_precision = metrics.precision_score(y_test, predictions, average='binary')
-    test_recall = metrics.recall_score(y_test, predictions, average='binary')
-    test_f1 = metrics.f1_score(y_test, predictions, average='binary')
-
-    return [test_accuracy, test_precision, test_recall, test_f1]
-
 
 
 def print_stats(labels, predictions, model="Not specified", country=None):
