@@ -40,6 +40,17 @@ rep_settings_params = {"name": "rep_settings.py",
                         "window_size": 5,
                         "learning_rate": 0.001}
 
+
+default_params = {"name": "default",
+                       "batch_size":32,
+                        "epochs":200,
+                        "filters":200,
+                        "kernel":[3,3,3],
+                        "dropout":0,
+                        "l2_reg_lambda": 0.01,
+                        "window_size": 5,
+                        "learning_rate": 0.001}
+
 #load pre-trained model for correct language
 w2v_es = models.KeyedVectors.load_word2vec_format('sbw_vectors.bin', binary=True)
 w2v_en = api.load("word2vec-google-news-300")
