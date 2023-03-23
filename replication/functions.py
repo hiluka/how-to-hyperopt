@@ -89,29 +89,68 @@ def load_data_leakage(data, seed):
 
     # Do tf-idf vectorization on all sets (fit on train, transform on all)
     X_train_vec = tfidf_vectorizer.transform(X_train)
-    
-    stratified_5_fold_cv = StratifiedKFold(n_splits=5, shuffle=True, random_state=20211010)
-    leaked_test = []
-    for i, (train_index, test_index) in enumerate(stratified_5_fold_cv.split(X_train, y_train)):
-        leaked_test.append(test_index.tolist())
-
-    X_test = X_train[X_train.index.isin(leaked_test[0])]
     X_test_vec = tfidf_vectorizer.transform(X_test)
-    y_test = y_train[y_train.index.isin(leaked_test[0])]
     
     return X_train_vec, X_test_vec, y_train, y_test
     
-def run_dummy(X_train_tfidf, X_test_tfidf, y_train, y_test):
-    dummy_clf = DummyClassifier(strategy="uniform", random_state=20211010)
-    dummy_clf.fit(X_train_tfidf, y_train)
+def run_dummy(X_train_tfidf, X_test_tfidf, y_train, y_test, tune = True):
+    dummy_clf = DummyClassifier(random_state=20211010)
+    
+    if (not tune):
+        dummy_clf.fit(X_train_tfidf, y_train)
   
-    predictions = dummy_clf.predict(X_test_tfidf)
+        predictions = dummy_clf.predict(X_test_tfidf)
+        test_accuracy = metrics.accuracy_score(y_test, predictions)
+        test_precision = metrics.precision_score(y_test, predictions, average='binary')
+        test_recall = metrics.recall_score(y_test, predictions, average='binary')
+        test_f1 = metrics.f1_score(y_test, predictions, average='binary')
+    
+        return [test_accuracy, test_precision, test_recall, test_f1]
+
+    # Define pipeline for tuning grid
+    pipeline = Pipeline(steps=[("dummy", dummy_clf)])
+
+    # Define parameter combinations for strategy and constant
+    param_grid = [
+        {
+            "dummy__strategy": ["most_frequent", "prior", "stratified", "uniform"],
+            "dummy__random_state": [20211010]
+        },
+        {
+            "dummy__strategy": ["constant"],
+            "dummy__constant": [1, 0],
+            "dummy__random_state": [20211010]
+        }
+    ]
+
+    # specify the cross validation
+    stratified_5_fold_cv = StratifiedKFold(n_splits=5, shuffle=True, random_state=20211010)
+    
+    # Perform grid search on isolated validation set
+    grid_search = GridSearchCV(pipeline, param_grid, cv=stratified_5_fold_cv, verbose=1, n_jobs=-1, scoring="f1")
+    grid_search.fit(X_train_tfidf, y_train)
+
+    # get the best parameter setting
+    print(
+        "Best Tuning Score is {} with params {}".format(grid_search.best_score_,
+                                                        grid_search.best_params_))
+
+    if grid_search.best_params_["dummy__strategy"] != "constant":
+        grid_search.best_params_["dummy__constant"] = None
+
+    best_dummy = DummyClassifier(strategy=grid_search.best_params_["dummy__strategy"],
+                   constant=grid_search.best_params_["dummy__constant"],
+                   random_state=20211010)
+    best_dummy.fit(X_train_tfidf, y_train)
+
+    predictions = best_dummy.predict(X_test_tfidf)
     test_accuracy = metrics.accuracy_score(y_test, predictions)
     test_precision = metrics.precision_score(y_test, predictions, average='binary')
     test_recall = metrics.recall_score(y_test, predictions, average='binary')
     test_f1 = metrics.f1_score(y_test, predictions, average='binary')
+
+    return [test_accuracy, test_precision, test_recall, test_f1], [grid_search.best_params_["dummy__strategy"], grid_search.best_params_["dummy__constant"], grid_search.best_score_]
     
-    return [test_accuracy, test_precision, test_recall, test_f1]
         
 def run_svc(X_train_tfidf, X_test_tfidf, y_train, y_test, tune = True):
     # Define initial SVC model
@@ -137,18 +176,20 @@ def run_svc(X_train_tfidf, X_test_tfidf, y_train, y_test, tune = True):
             "svc__C": np.exp(list(range(0, 11))),
             "svc__gamma": [0.0001, 0.001, 0.01, 0.1, 1, "scale", "auto"],
             "svc__kernel": ["rbf", "poly", "sigmoid"],
-            "svc__class_weight": [None, "balanced"]
+            "svc__class_weight": [None, "balanced"],
+            "svc__random_state": [20211010]
         },
         {
             "svc__C": np.exp(list(range(0, 11))),
             "svc__kernel": ["linear"],
-            "svc__class_weight": [None, "balanced"]
+            "svc__class_weight": [None, "balanced"],
+            "svc__random_state": [20211010]
         }
     ]
 
     # specify the cross validation
     stratified_5_fold_cv = StratifiedKFold(n_splits=5, shuffle=True, random_state=20211010)
-
+    
     # Perform grid search on isolated validation set
     grid_search = GridSearchCV(pipeline, param_grid, cv=stratified_5_fold_cv, verbose=1, n_jobs=-1, scoring="f1")
     grid_search.fit(X_train_tfidf, y_train)
@@ -201,12 +242,14 @@ def run_svc_leakage(X_train_tfidf, X_test_tfidf, y_train, y_test, tune = True):
             "svc__C": np.exp(list(range(0, 11))),
             "svc__gamma": [0.0001, 0.001, 0.01, 0.1, 1, "scale", "auto"],
             "svc__kernel": ["rbf", "poly", "sigmoid"],
-            "svc__class_weight": [None, "balanced"]
+            "svc__class_weight": [None, "balanced"],
+            "svc__random_state": [20211010]
         },
         {
             "svc__C": np.exp(list(range(0, 11))),
             "svc__kernel": ["linear"],
-            "svc__class_weight": [None, "balanced"]
+            "svc__class_weight": [None, "balanced"],
+            "svc__random_state": [20211010]
         }
     ]
 
@@ -264,7 +307,8 @@ def run_randomforest(X_train_tfidf, X_test_tfidf, y_train, y_test, tune = True):
             "randomforest__max_depth": [1, 5, 25, 50, 75, 100, 150, 200, 400, 1000, None],
             "randomforest__n_estimators": [1, 5, 15, 50, 75, 100, 150, 200, 400, 1000],
             "randomforest__class_weight": [None, "balanced"],
-            "randomforest__max_features": ["sqrt", "log2", None]
+            "randomforest__max_features": ["sqrt", "log2", None],
+            "randomforest__random_state": [20211010]
         }
     ]
 
@@ -332,7 +376,7 @@ def run_naivebayes(X_train_tfidf, X_test_tfidf, y_train, y_test, tune = True):
         "Best Tuning Score is {} with params {}".format(grid_search.best_score_,
                                                         grid_search.best_params_))
 
-    best_naivebayes = MultinomialNB(alpha=grid_search.best_params_["naivebayes__alpha"])
+    best_naivebayes = MultinomialNB(alpha = grid_search.best_params_["naivebayes__alpha"])
     best_naivebayes.fit(X_train_tfidf, y_train)
 
     predictions = best_naivebayes.predict(X_test_tfidf)
