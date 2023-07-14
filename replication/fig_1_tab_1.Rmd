@@ -1,7 +1,24 @@
+---
+title: The Role of Hyperparameters in Machine Learning Models and How to Tune Them (PSRM, 2023)
+author: "Christian Arnold, Luka Biedebach, Andreas Küpfer, and Marcel Neunhoeffer"
+date: "2023-07-05"
+output: pdf_document
+---
+
+```{r setup}
+#install.packages("pacman")
+pacman::p_load(here)
+
+setwd(here::here())
+```
+
+
+```{r}
+# Figure 1
 # Do you want to save the plot to disk at the end?
 save_plot <- TRUE
 
-plot_path <-  "~/Downloads/bivariate_example.png"
+plot_path <-  "results/bivariate_example.png"
 
 # Set seed for replicability (seed is date of our last run)
 set.seed(12102021)
@@ -12,7 +29,6 @@ x <- rnorm(1000)
 y  <- 1 + x + 0.8 * x ^ 2 + 0.3 * x ^ 3 + rnorm(1000, 0, 2)
 
 df <- data.frame(y, x)
-
 
 # Set the number of folds for cross validation
 n_folds <- 10
@@ -78,7 +94,29 @@ lines(q, predict(reg, data.frame(x = q)), col = viridis::viridis(4, 0.7)[3], lwd
 
 
 if(save_plot){
-dev.copy(png, filename = plot_path, width = 695, height = 450)
-dev.off()
+  dev.copy(png, filename = plot_path, width = 695, height = 450)
+  dev.off()
 }
+```
+
+
+```{r}
+# Table 1
+
+# -- Data ---------------------------------------------------------------------- 
+dat.temp <- read.csv("raw/annotations_march22_2023.csv", sep = ',', header = TRUE)
+dat <- subset(dat.temp, 
+  subset = dat.temp$Does.the.paper.use.machine.learning.in.the.sense.of.our.definition. == TRUE)
+
+# Recoding some data 
+dat$journal <- car::recode(dat$journal, "
+            'American Political Science Review' = 'APSR';
+            'Political Analysis' = 'PA';
+            'Political Science Research and Methods' = 'PSRM'
+            ")
+
+# Table for Main Paper
+table(dat$model.replicability, dat$tuning.replicability)
+round(prop.table(table(dat$model.replicability, dat$tuning.replicability)), 4)*100
+```
 
