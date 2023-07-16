@@ -217,72 +217,6 @@ def run_svc(X_train_tfidf, X_test_tfidf, y_train, y_test, tune = True):
 
     return [test_accuracy, test_precision, test_recall, test_f1], [grid_search.best_params_["svc__kernel"], grid_search.best_params_["svc__C"], grid_search.best_params_["svc__class_weight"], grid_search.best_params_["svc__gamma"], grid_search.best_score_]
 
-
-def run_svc_leakage(X_train_tfidf, X_test_tfidf, y_train, y_test, tune = True):
-    # Define initial SVC model
-    svc = SVC(random_state=20211010)
-    
-    if (not tune):
-        svc.fit(X_train_tfidf, y_train)
-        
-        predictions = svc.predict(X_test_tfidf)
-        test_accuracy = metrics.accuracy_score(y_test, predictions)
-        test_precision = metrics.precision_score(y_test, predictions, average='binary')
-        test_recall = metrics.recall_score(y_test, predictions, average='binary')
-        test_f1 = metrics.f1_score(y_test, predictions, average='binary')
-        
-        return [test_accuracy, test_precision, test_recall, test_f1]
-
-    # Define pipeline for tuning grid
-    pipeline = Pipeline(steps=[("svc", svc)])
-
-    # Define parameter combinations for C, gamma and kernel (ignore gamma parameter for linear kernel as it is not availbale for the linear kernel)
-    param_grid = [
-        {
-            "svc__C": np.exp(list(range(0, 11))),
-            "svc__gamma": [0.0001, 0.001, 0.01, 0.1, 1, "scale", "auto"],
-            "svc__kernel": ["rbf", "poly", "sigmoid"],
-            "svc__class_weight": [None, "balanced"],
-            "svc__random_state": [20211010]
-        },
-        {
-            "svc__C": np.exp(list(range(0, 11))),
-            "svc__kernel": ["linear"],
-            "svc__class_weight": [None, "balanced"],
-            "svc__random_state": [20211010]
-        }
-    ]
-
-    # specify the cross validation
-    stratified_5_fold_cv = StratifiedKFold(n_splits=5, shuffle=True, random_state=20211010)
-
-    # Perform grid search on isolated validation set
-    grid_search = GridSearchCV(pipeline, param_grid, cv=stratified_5_fold_cv, verbose=1, n_jobs=-1, scoring="f1")
-    grid_search.fit(X_train_tfidf, y_train)
-
-    # get the best parameter setting
-    print(
-        "Best Tuning Score is {} with params {}".format(grid_search.best_score_,
-                                                        grid_search.best_params_))
-
-    if grid_search.best_params_["svc__kernel"] == "linear":
-        grid_search.best_params_["svc__gamma"] = None
-
-    best_svc = SVC(C=grid_search.best_params_["svc__C"],
-                   gamma=grid_search.best_params_["svc__gamma"],
-                   kernel=grid_search.best_params_["svc__kernel"],
-                   class_weight=grid_search.best_params_["svc__class_weight"],
-                   random_state=20211010)
-    best_svc.fit(X_train_tfidf, y_train)
-
-    predictions = best_svc.predict(X_test_tfidf)
-    test_accuracy = metrics.accuracy_score(y_test, predictions)
-    test_precision = metrics.precision_score(y_test, predictions, average='binary')
-    test_recall = metrics.recall_score(y_test, predictions, average='binary')
-    test_f1 = metrics.f1_score(y_test, predictions, average='binary')
-
-    return [test_accuracy, test_precision, test_recall, test_f1], [grid_search.best_params_["svc__kernel"], grid_search.best_params_["svc__C"], grid_search.best_params_["svc__class_weight"], grid_search.best_params_["svc__gamma"], grid_search.best_score_]
-
 def run_randomforest(X_train_tfidf, X_test_tfidf, y_train, y_test, tune = True):
     # Define initial Random Forest model
     randomforest = RandomForestClassifier(random_state=20211010)
@@ -386,34 +320,6 @@ def run_naivebayes(X_train_tfidf, X_test_tfidf, y_train, y_test, tune = True):
     test_f1 = metrics.f1_score(y_test, predictions, average='binary')
 
     return [test_accuracy, test_precision, test_recall, test_f1], [grid_search.best_params_["naivebayes__alpha"], grid_search.best_score_]
-
-def only_run_svc(X_train_tfidf, X_test_tfidf, y_train, y_test, country, run):
-    
-    hp_df = pd.read_csv("svm_results_hyperparameter.csv")
-    hp_df = hp_df.loc[hp_df["Country"]==country].reset_index(drop=True)
-    
-    try:
-        g = float(hp_df["gamma"].iloc[run])
-    except:
-        g = hp_df["gamma"].iloc[run]
-        
-    b = "balanced" if hp_df["class_weight"].iloc[run] == "balanced" else ""
-
-    best_svc = SVC(C=hp_df["C"].iloc[run],
-                   gamma=g,
-                   kernel=hp_df["kernel"].iloc[run],
-                   class_weight=b,
-                   random_state=20211010)
-    best_svc.fit(X_train_tfidf, y_train)
-
-    predictions = best_svc.predict(X_test_tfidf)
-    test_accuracy = metrics.accuracy_score(y_test, predictions)
-    test_precision = metrics.precision_score(y_test, predictions, average='binary')
-    test_recall = metrics.recall_score(y_test, predictions, average='binary')
-    test_f1 = metrics.f1_score(y_test, predictions, average='binary')
-
-    return [test_accuracy, test_precision, test_recall, test_f1]
-
 
 def print_stats(labels, predictions, model="Not specified", country=None):
 
