@@ -1,0 +1,16 @@
+Country,max_depth,n_estimators,class_weight,max_features,Tuning F1
+Venezuela,5,1000,balanced,sqrt,0.486
+Venezuela,5,150,balanced,sqrt,0.505
+Venezuela,5,400,balanced,sqrt,0.469
+Venezuela,5,400,balanced,sqrt,0.486
+Venezuela,5,200,balanced,sqrt,0.48
+Ghana,5,100,balanced,sqrt,0.599
+Ghana,5,200,balanced,sqrt,0.592
+Ghana,5,150,balanced,sqrt,0.611
+Ghana,5,150,balanced,sqrt,0.581
+Ghana,5,400,balanced,sqrt,0.597
+Philippines,1,400,balanced,log2,0.462
+Philippines,5,1000,balanced,sqrt,0.472
+Philippines,5,1000,balanced,log2,0.517
+Philippines,5,150,balanced,sqrt,0.459
+Philippines,5,100,balanced,sqrt,0.466

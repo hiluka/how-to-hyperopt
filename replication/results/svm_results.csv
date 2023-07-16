@@ -1,0 +1,7 @@
+Baseline,Country,Accuracy,Precision,Recall,F1
+SVM,Venezuela,0.919,0.366,0.638,0.465
+SVM Untuned,Venezuela,0.946,0.667,0.043,0.08
+SVM,Ghana,0.965,0.706,0.75,0.727
+SVM Untuned,Ghana,0.949,0.8,0.25,0.381
+SVM,Philippines,0.949,0.471,0.696,0.561
+SVM Untuned,Philippines,0.963,1.0,0.217,0.357

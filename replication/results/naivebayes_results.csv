@@ -1,0 +1,7 @@
+Baseline,Country,Accuracy,Precision,Recall,F1
+Naive Bayes,Venezuela,0.947,0.556,0.213,0.308
+Naive Bayes Untuned,Venezuela,0.945,0.0,0.0,0.0
+Naive Bayes,Ghana,0.953,0.7,0.438,0.538
+Naive Bayes Untuned,Ghana,0.937,0.0,0.0,0.0
+Naive Bayes,Philippines,0.949,0.444,0.348,0.39
+Naive Bayes Untuned,Philippines,0.953,0.0,0.0,0.0
