@@ -1,16 +1,16 @@
-Country,alpha,Tuning F1
-Venezuela,0.002,0.331
-Venezuela,0.002,0.321
-Venezuela,0.004,0.347
-Venezuela,0.019,0.29
-Venezuela,0.004,0.34
-Ghana,0.0,0.512
-Ghana,0.0,0.457
-Ghana,0.0,0.452
-Ghana,0.0,0.444
-Ghana,0.0,0.456
-Philippines,0.0,0.482
-Philippines,0.0,0.449
-Philippines,0.0,0.465
-Philippines,0.0,0.448
-Philippines,0.0,0.462
+Country,alpha,Tuning F1,OOS F1
+Venezuela,0.002,0.331,0.308
+Venezuela,0.002,0.321,0.358
+Venezuela,0.004,0.347,0.344
+Venezuela,0.019,0.29,0.48
+Venezuela,0.004,0.34,0.333
+Ghana,0.0,0.512,0.538
+Ghana,0.0,0.457,0.522
+Ghana,0.0,0.452,0.415
+Ghana,0.0,0.444,0.632
+Ghana,0.0,0.456,0.468
+Philippines,0.0,0.482,0.39
+Philippines,0.0,0.449,0.421
+Philippines,0.0,0.465,0.324
+Philippines,0.0,0.448,0.474
+Philippines,0.0,0.462,0.526

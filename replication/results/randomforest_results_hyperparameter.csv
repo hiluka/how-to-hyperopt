@@ -1,16 +1,16 @@
-Country,max_depth,n_estimators,class_weight,max_features,Tuning F1
-Venezuela,5,1000,balanced,sqrt,0.486
-Venezuela,5,150,balanced,sqrt,0.505
-Venezuela,5,400,balanced,sqrt,0.469
-Venezuela,5,400,balanced,sqrt,0.486
-Venezuela,5,200,balanced,sqrt,0.48
-Ghana,5,100,balanced,sqrt,0.599
-Ghana,5,200,balanced,sqrt,0.592
-Ghana,5,150,balanced,sqrt,0.611
-Ghana,5,150,balanced,sqrt,0.581
-Ghana,5,400,balanced,sqrt,0.597
-Philippines,1,400,balanced,log2,0.462
-Philippines,5,1000,balanced,sqrt,0.472
-Philippines,5,1000,balanced,log2,0.517
-Philippines,5,150,balanced,sqrt,0.459
-Philippines,5,100,balanced,sqrt,0.466
+Country,max_depth,n_estimators,class_weight,max_features,Tuning F1,OOS F1
+Venezuela,5,1000,balanced,sqrt,0.486,0.479
+Venezuela,5,150,balanced,sqrt,0.505,0.283
+Venezuela,5,400,balanced,sqrt,0.469,0.516
+Venezuela,5,400,balanced,sqrt,0.486,0.491
+Venezuela,5,200,balanced,sqrt,0.48,0.42
+Ghana,5,100,balanced,sqrt,0.599,0.603
+Ghana,5,200,balanced,sqrt,0.592,0.472
+Ghana,5,150,balanced,sqrt,0.611,0.551
+Ghana,5,150,balanced,sqrt,0.581,0.5
+Ghana,5,400,balanced,sqrt,0.597,0.545
+Philippines,1,400,balanced,log2,0.462,0.16
+Philippines,5,1000,balanced,sqrt,0.472,0.417
+Philippines,5,1000,balanced,log2,0.517,0.256
+Philippines,5,150,balanced,sqrt,0.459,0.458
+Philippines,5,100,balanced,sqrt,0.466,0.372
