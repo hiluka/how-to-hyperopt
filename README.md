@@ -1,6 +1,6 @@
 # how-to-hyperopt
 
-This repository contains the code necessary to replicate the tables and figures documented in "The Role of Hyperparameters in Machine Learning Models and How to Tune Them" (Christian Arnold, Luka Biedebach, Andreas Küpfer, Marcel Neunhoeffer)
+This repository contains the code necessary to replicate the tables and figures documented in "The Role of Hyperparameters in Machine Learning Models and How to Tune Them" (Christian Arnold, Luka Biedebach, Andreas Küpfer, Marcel Neunhoeffer). The most current version of the replication archive is hosted on GitHub (https://github.com/hiluka/how-to-hyperopt/) while the Harvard Dataverse serves as a snapshot of our replication.
 
 #### Contents
 
@@ -15,9 +15,11 @@ This dataverse is structured as follows:
 		- functions.py - Python file, contains Python helper functions
 	- environment.yml - YML-file containing the Python packages with versions for the code based on Python 
 	- fig_1_tab_1.Rmd - RMarkdown notebook; replicates figure 1 and table 1
-	- fig_1_tab_1.pdf - pdf file; produced from running fig_1_tab_1.Rmd
+	- fig_1_tab_1.pdf - pdf file; Log produced from running fig_1_tab_1.Rmd
 	- tab_2_A4_A5_A6_A7.ipynb - Python notebook; replicates information depicted in table 2, A4, A5, A6 and A7
 	- tab_2_a4_a5_a6_a7.py - Python script which calls tab_2_a4_a5_a6_nb_rf_svm.py and tab_2_a7_cnn.py (set rerun either to True or False within the script)
+	- tab_2_a4_a5_a6_nb_rf_svm.txt - Log produced from running tab_2_a4_a5_a6_a7.py
+	- tab_2_a7_cnn.txt - Log produced from running tab_2_a4_a5_a6_a7.py
 	- tab_2_a4_a5_a6_nb_rf_svm.py - Python Script to replicate Table 2, A4, A5, A6 and A7 in isolation (NB, RF, SVM only)
 	- tab_2_a7_cnn.py - Python Script to replicate Table 2 and A7 in isolation (CNN only)
 	- results - Folder containing the .csv files with detailed results of our models
