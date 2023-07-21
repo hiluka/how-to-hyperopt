@@ -15,8 +15,7 @@ args = parser.parse_args()
 rerun = args.rerun
 
 # Table 2, A4, A5, A6, and A7
-
 # Naive Bayes, Random Forest, and Support Vector Machine
-os.system(f"python tab_2_a4_a5_a6_nb_rf_svm.py --rerun" if rerun else f"python tab_2_a4_a5_a6_nb_rf_svm.py")
+os.system(f"python tab_2_a4_a5_a6_nb_rf_svm.py --rerun > tab_2_a4_a5_a6_nb_rf_svm.txt" if rerun else f"python tab_2_a4_a5_a6_nb_rf_svm.py > tab_2_a4_a5_a6_nb_rf_svm.txt")
 # CNN
-os.system(f"python tab_2_a7_cnn.py --rerun" if rerun else f"python tab_2_a4_a5_a6_nb_rf_svm.py")
+os.system(f"python tab_2_a7_cnn.py --rerun > python tab_2_a7_cnn.txt" if rerun else f"python tab_2_a7_cnn.py > python tab_2_a7_cnn.txt")
