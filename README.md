@@ -58,7 +58,7 @@ conda activate how-to-hyperopt
 You can find the tweet IDs used by the models in the replication directory. If you want to replicate the study with the exact same data, please get in touch with the authors. However, all tweets which are still available can be downloaded using the official Twitter API and used for a replication.
 In order to run the CNN replication (files tab_2_A4_A5_A6.ipynb or tab_2_a4_a5_a6_cnn.py), please download the pretrained Word2Vec Model for the spanish tweets at https://crscardellino.ar/SBWCE/ and save it in the replication folder.
 
-The most convienient way to replicate all the information depicted in all tables and figures is the following:
+The most convenient way to replicate all the information depicted in all tables and figures is the following:
 - Run RMarkdown file "fig_1_tab_1.Rmd" (Figure 1 and Table 1)
 - Create conda envrionment for Python dependencies (see above)
 - Run Python file "tab_2_a4_a5_a6_a7.py" (Figure 2, A4, A5, A6, and A7)
