@@ -40,8 +40,6 @@ import gensim.downloader as api
 from nltk.corpus import stopwords
 from nltk.stem.snowball import EnglishStemmer, SpanishStemmer
 
-from functions import *
-
 def preprocess_data(dataset_path, stops, stemmer):
     def preprocess_tweet(tweet, stops, stemmer):
         # remove URLs
