@@ -11,7 +11,7 @@ nltk.download('stopwords')
 import argparse
 
 parser = argparse.ArgumentParser(description='"Run Naive Bayes, Random Forest, and Support Vector Machine code.')
-parser.add_argument('--rerun', type=bool, default=False, help='Rerun flag (default: False)')
+parser.add_argument('--rerun', action='store_true', help='Rerun tuning completely')
 args = parser.parse_args()
 rerun = args.rerun
 
@@ -24,7 +24,7 @@ if not rerun:
 seeds = [20210101, 20210102, 20210103, 20210104, 20210105]
 
 # initialize dictionary for countries/datasets
-countries = {"Venezuela": "raw/vz-tweets_full.csv", "Ghana": "raw/gh-tweets_full.csv", "Philippines": "raw/ph-tweets_full.csv"}
+countries = {"Venezuela": "data/vz-tweets_full.csv", "Ghana": "data/gh-tweets_full.csv", "Philippines": "data/ph-tweets_full.csv"}
 
 # define dataframe to store results
 results_svc = pd.DataFrame(

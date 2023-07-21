@@ -154,6 +154,6 @@ cython_debug/
 /venv/
 .DS_Store
 /replication/.DS_Store
-/replication/raw/vz-tweets_full.csv
-/replication/raw/ph-tweets_full.csv
-/replication/raw/gh-tweets_full.csv
+/replication/data/vz-tweets_full.csv
+/replication/data/ph-tweets_full.csv
+/replication/data/gh-tweets_full.csv

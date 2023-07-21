@@ -27,7 +27,7 @@ from utils.functions import *
 import argparse
 
 parser = argparse.ArgumentParser(description='"Run CNN code.')
-parser.add_argument('--rerun', type=bool, default=False, help='Rerun flag (default: False)')
+parser.add_argument('--rerun', action='store_true', help='Rerun tuning completely')
 args = parser.parse_args()
 # Set to True if models should be run again
 rerun = args.rerun
