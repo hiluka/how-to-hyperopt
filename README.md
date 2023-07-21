@@ -10,7 +10,7 @@ This dataverse is structured as follows:
 		- gh-tweets.csv - tweet IDs and labels of tweets belonging to Ghana
 		- ph-tweets.csv - tweet IDs and labels of tweets belonging to Philippines
 		- vz-tweets.csv - tweet IDs and labels of tweets belonging to Venezuela
-    		- annotations_march22_2023.csv - paper annotations
+		- annotations_march22_2023.csv - paper annotations
 	- functions.py - Python file, contains Python helper functions
 	- environment.yml - YML-file containing the Python packages with versions for the code based on Python 
 	- fig_1_tab_1.Rmd - RMarkdown notebook; replicates figure 1 and table 1
