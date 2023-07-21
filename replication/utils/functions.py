@@ -12,7 +12,6 @@ import numpy as np
 import keras.backend as K
 import keras_tuner
 
-import tensorflow as tf
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense, Conv2D, Dropout, MaxPooling2D
 from keras import regularizers, Input

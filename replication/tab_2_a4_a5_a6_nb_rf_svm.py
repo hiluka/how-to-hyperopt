@@ -1,4 +1,4 @@
-from functions import *
+from utils.functions import *
 import numpy as np
 np.set_printoptions(precision=15)
 import pandas as pd

@@ -104,7 +104,7 @@ if(save_plot){
 # Table 1
 
 # -- Data ---------------------------------------------------------------------- 
-dat.temp <- read.csv("raw/annotations_march22_2023.csv", sep = ',', header = TRUE)
+dat.temp <- read.csv("data/annotations_march22_2023.csv", sep = ',', header = TRUE)
 dat <- subset(dat.temp, 
   subset = dat.temp$Does.the.paper.use.machine.learning.in.the.sense.of.our.definition. == TRUE)
 

@@ -22,7 +22,7 @@ from keras.wrappers.scikit_learn import KerasClassifier
 from gensim import models
 import gensim.downloader as api
 
-from functions import *
+from utils.functions import *
 
 import argparse
 
