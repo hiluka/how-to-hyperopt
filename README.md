@@ -1,6 +1,6 @@
 # how-to-hyperopt
 
-This repository contains the code necessary to replicate the findings documented in "The Role of Hyperparameters in Machine Learning Models and How to Tune Them"
+This repository contains the code necessary to replicate the tables and figures documented in "The Role of Hyperparameters in Machine Learning Models and How to Tune Them" (Christian Arnold, Luka Biedebach, Andreas Küpfer, Marcel Neunhoeffer)
 
 #### Contents
 
