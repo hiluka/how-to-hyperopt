@@ -1,0 +1,356 @@
+Rerun flag true: tuning in progress...
+
+Current Country: Venezuela
+SVC...
+Fitting 5 folds for each of 484 candidates, totalling 2420 fits
+Best Tuning Score is 0.5377622377622379 with params {'svc__C': 1.0, 'svc__class_weight': 'balanced', 'svc__gamma': 0.1, 'svc__kernel': 'rbf', 'svc__random_state': 20211010}
+[0.9191090269636577, 0.36585365853658536, 0.6382978723404256, 0.46511627906976744]
+SVC Default...
+[0.9460726846424384, 0.6666666666666666, 0.0425531914893617, 0.08]
+Random Forest...
+Fitting 5 folds for each of 660 candidates, totalling 3300 fits
+Best Tuning Score is 0.4862738813474108 with params {'randomforest__class_weight': 'balanced', 'randomforest__max_depth': 5, 'randomforest__max_features': 'sqrt', 'randomforest__n_estimators': 1000, 'randomforest__random_state': 20211010}
+[0.9413833528722158, 0.46938775510204084, 0.48936170212765956, 0.47916666666666663]
+Random Forest Default...
+[0.9472450175849941, 0.5833333333333334, 0.14893617021276595, 0.23728813559322032]
+Naives Bayes...
+Fitting 5 folds for each of 100 candidates, totalling 500 fits
+Best Tuning Score is 0.3306634327631272 with params {'naivebayes__alpha': 0.0015199110829529332}
+[0.9472450175849941, 0.5555555555555556, 0.2127659574468085, 0.3076923076923077]
+Naives Bayes Default...
+[0.9449003516998827, 0.0, 0.0, 0.0]
+SVC...
+Fitting 5 folds for each of 484 candidates, totalling 2420 fits
+Best Tuning Score is 0.5411752556444264 with params {'svc__C': 403.4287934927351, 'svc__class_weight': 'balanced', 'svc__gamma': 0.0001, 'svc__kernel': 'rbf', 'svc__random_state': 20211010}
+[0.9273153575615475, 0.38461538461538464, 0.5319148936170213, 0.44642857142857145]
+SVC Default...
+[0.9472450175849941, 0.6, 0.1276595744680851, 0.21052631578947367]
+Random Forest...
+Fitting 5 folds for each of 660 candidates, totalling 3300 fits
+Best Tuning Score is 0.5051955826676062 with params {'randomforest__class_weight': 'balanced', 'randomforest__max_depth': 5, 'randomforest__max_features': 'sqrt', 'randomforest__n_estimators': 150, 'randomforest__random_state': 20211010}
+[0.9109026963657679, 0.2542372881355932, 0.3191489361702128, 0.28301886792452835]
+Random Forest Default...
+[0.9472450175849941, 0.5714285714285714, 0.1702127659574468, 0.2622950819672131]
+Naives Bayes...
+Fitting 5 folds for each of 100 candidates, totalling 500 fits
+Best Tuning Score is 0.3212246301177243 with params {'naivebayes__alpha': 0.001873817422860383}
+[0.9495896834701055, 0.6, 0.2553191489361702, 0.3582089552238805]
+Naives Bayes Default...
+[0.9449003516998827, 0.0, 0.0, 0.0]
+SVC...
+Fitting 5 folds for each of 484 candidates, totalling 2420 fits
+Best Tuning Score is 0.5583062790591106 with params {'svc__C': 1.0, 'svc__class_weight': 'balanced', 'svc__gamma': 0.1, 'svc__kernel': 'rbf', 'svc__random_state': 20211010}
+[0.9320046893317703, 0.42028985507246375, 0.6170212765957447, 0.5]
+SVC Default...
+[0.9460726846424384, 0.6, 0.06382978723404255, 0.11538461538461536]
+Random Forest...
+Fitting 5 folds for each of 660 candidates, totalling 3300 fits
+Best Tuning Score is 0.46898123119683577 with params {'randomforest__class_weight': 'balanced', 'randomforest__max_depth': 5, 'randomforest__max_features': 'sqrt', 'randomforest__n_estimators': 400, 'randomforest__random_state': 20211010}
+[0.9472450175849941, 0.5217391304347826, 0.5106382978723404, 0.5161290322580645]
+Random Forest Default...
+[0.9472450175849941, 0.5833333333333334, 0.14893617021276595, 0.23728813559322032]
+Naives Bayes...
+Fitting 5 folds for each of 100 candidates, totalling 500 fits
+Best Tuning Score is 0.3474681000673745 with params {'naivebayes__alpha': 0.003511191734215131}
+[0.9507620164126612, 0.6470588235294118, 0.23404255319148937, 0.34375]
+Naives Bayes Default...
+[0.9449003516998827, 0.0, 0.0, 0.0]
+SVC...
+Fitting 5 folds for each of 484 candidates, totalling 2420 fits
+Best Tuning Score is 0.4989018138177184 with params {'svc__C': 148.4131591025766, 'svc__class_weight': 'balanced', 'svc__gamma': 'auto', 'svc__kernel': 'rbf', 'svc__random_state': 20211010}
+[0.9296600234466589, 0.41975308641975306, 0.723404255319149, 0.53125]
+SVC Default...
+[0.9531066822977726, 0.8181818181818182, 0.19148936170212766, 0.31034482758620685]
+Random Forest...
+Fitting 5 folds for each of 660 candidates, totalling 3300 fits
+Best Tuning Score is 0.4859400053652738 with params {'randomforest__class_weight': 'balanced', 'randomforest__max_depth': 5, 'randomforest__max_features': 'sqrt', 'randomforest__n_estimators': 400, 'randomforest__random_state': 20211010}
+[0.936694021101993, 0.4406779661016949, 0.5531914893617021, 0.49056603773584906]
+Random Forest Default...
+[0.9507620164126612, 0.6923076923076923, 0.19148936170212766, 0.30000000000000004]
+Naives Bayes...
+Fitting 5 folds for each of 100 candidates, totalling 500 fits
+Best Tuning Score is 0.29013453392774535 with params {'naivebayes__alpha': 0.01873817422860384}
+[0.9542790152403282, 0.6428571428571429, 0.3829787234042553, 0.48]
+Naives Bayes Default...
+[0.9449003516998827, 0.0, 0.0, 0.0]
+SVC...
+Fitting 5 folds for each of 484 candidates, totalling 2420 fits
+Best Tuning Score is 0.5268164678152867 with params {'svc__C': 54.598150033144236, 'svc__class_weight': 'balanced', 'svc__gamma': 0.001, 'svc__kernel': 'sigmoid', 'svc__random_state': 20211010}
+[0.9378663540445487, 0.45714285714285713, 0.6808510638297872, 0.547008547008547]
+SVC Default...
+[0.9507620164126612, 1.0, 0.10638297872340426, 0.1923076923076923]
+Random Forest...
+Fitting 5 folds for each of 660 candidates, totalling 3300 fits
+Best Tuning Score is 0.4797324361131138 with params {'randomforest__class_weight': 'balanced', 'randomforest__max_depth': 5, 'randomforest__max_features': 'sqrt', 'randomforest__n_estimators': 200, 'randomforest__random_state': 20211010}
+[0.9320046893317703, 0.39622641509433965, 0.44680851063829785, 0.42000000000000004]
+Random Forest Default...
+[0.9531066822977726, 0.8888888888888888, 0.1702127659574468, 0.2857142857142857]
+Naives Bayes...
+Fitting 5 folds for each of 100 candidates, totalling 500 fits
+Best Tuning Score is 0.3397329168721574 with params {'naivebayes__alpha': 0.004328761281083057}
+[0.9531066822977726, 0.7692307692307693, 0.2127659574468085, 0.33333333333333337]
+Naives Bayes Default...
+[0.9449003516998827, 0.0, 0.0, 0.0]
+
+Current Country: Ghana
+SVC...
+Fitting 5 folds for each of 484 candidates, totalling 2420 fits
+Best Tuning Score is 0.674169622806332 with params {'svc__C': 20.085536923187668, 'svc__class_weight': 'balanced', 'svc__gamma': 0.01, 'svc__kernel': 'rbf', 'svc__random_state': 20211010}
+[0.9645669291338582, 0.7058823529411765, 0.75, 0.7272727272727272]
+SVC Default...
+[0.9488188976377953, 0.8, 0.25, 0.38095238095238093]
+Random Forest...
+Fitting 5 folds for each of 660 candidates, totalling 3300 fits
+Best Tuning Score is 0.5991022914367862 with params {'randomforest__class_weight': 'balanced', 'randomforest__max_depth': 5, 'randomforest__max_features': 'sqrt', 'randomforest__n_estimators': 100, 'randomforest__random_state': 20211010}
+[0.9507874015748031, 0.6129032258064516, 0.59375, 0.6031746031746031]
+Random Forest Default...
+[0.9468503937007874, 0.7777777777777778, 0.21875, 0.34146341463414637]
+Naives Bayes...
+Fitting 5 folds for each of 100 candidates, totalling 500 fits
+Best Tuning Score is 0.5118148872990834 with params {'naivebayes__alpha': 6.579332246575683e-06}
+[0.952755905511811, 0.7, 0.4375, 0.5384615384615384]
+Naives Bayes Default...
+[0.937007874015748, 0.0, 0.0, 0.0]
+SVC...
+Fitting 5 folds for each of 484 candidates, totalling 2420 fits
+Best Tuning Score is 0.6661288515406163 with params {'svc__C': 2980.9579870417283, 'svc__class_weight': 'balanced', 'svc__gamma': 0.0001, 'svc__kernel': 'rbf', 'svc__random_state': 20211010}
+[0.9468503937007874, 0.5714285714285714, 0.625, 0.5970149253731343]
+SVC Default...
+[0.9547244094488189, 0.8461538461538461, 0.34375, 0.4888888888888889]
+Random Forest...
+Fitting 5 folds for each of 660 candidates, totalling 3300 fits
+Best Tuning Score is 0.5919452225334578 with params {'randomforest__class_weight': 'balanced', 'randomforest__max_depth': 5, 'randomforest__max_features': 'sqrt', 'randomforest__n_estimators': 200, 'randomforest__random_state': 20211010}
+[0.9251968503937008, 0.425, 0.53125, 0.47222222222222215]
+Random Forest Default...
+[0.952755905511811, 0.7857142857142857, 0.34375, 0.4782608695652174]
+Naives Bayes...
+Fitting 5 folds for each of 100 candidates, totalling 500 fits
+Best Tuning Score is 0.4574571811167556 with params {'naivebayes__alpha': 8.111308307896872e-07}
+[0.9566929133858267, 0.8571428571428571, 0.375, 0.5217391304347825]
+Naives Bayes Default...
+[0.937007874015748, 0.0, 0.0, 0.0]
+SVC...
+Fitting 5 folds for each of 484 candidates, totalling 2420 fits
+Best Tuning Score is 0.6566268242940857 with params {'svc__C': 2.718281828459045, 'svc__class_weight': 'balanced', 'svc__gamma': 0.1, 'svc__kernel': 'sigmoid', 'svc__random_state': 20211010}
+[0.9330708661417323, 0.4807692307692308, 0.78125, 0.5952380952380952]
+SVC Default...
+[0.9409448818897638, 0.5833333333333334, 0.21875, 0.31818181818181823]
+Random Forest...
+Fitting 5 folds for each of 660 candidates, totalling 3300 fits
+Best Tuning Score is 0.610888455482305 with params {'randomforest__class_weight': 'balanced', 'randomforest__max_depth': 5, 'randomforest__max_features': 'sqrt', 'randomforest__n_estimators': 150, 'randomforest__random_state': 20211010}
+[0.9389763779527559, 0.5135135135135135, 0.59375, 0.5507246376811593]
+Random Forest Default...
+[0.9330708661417323, 0.4, 0.125, 0.19047619047619047]
+Naives Bayes...
+Fitting 5 folds for each of 100 candidates, totalling 500 fits
+Best Tuning Score is 0.45180690540538393 with params {'naivebayes__alpha': 5.336699231206313e-06}
+[0.9389763779527559, 0.5238095238095238, 0.34375, 0.4150943396226415]
+Naives Bayes Default...
+[0.937007874015748, 0.0, 0.0, 0.0]
+SVC...
+Fitting 5 folds for each of 484 candidates, totalling 2420 fits
+Best Tuning Score is 0.6711242142276626 with params {'svc__C': 148.4131591025766, 'svc__class_weight': 'balanced', 'svc__gamma': 0.001, 'svc__kernel': 'rbf', 'svc__random_state': 20211010}
+[0.9291338582677166, 0.46, 0.71875, 0.5609756097560976]
+SVC Default...
+[0.9606299212598425, 0.9285714285714286, 0.40625, 0.5652173913043478]
+Random Forest...
+Fitting 5 folds for each of 660 candidates, totalling 3300 fits
+Best Tuning Score is 0.5812121212121213 with params {'randomforest__class_weight': 'balanced', 'randomforest__max_depth': 5, 'randomforest__max_features': 'sqrt', 'randomforest__n_estimators': 150, 'randomforest__random_state': 20211010}
+[0.9251968503937008, 0.4318181818181818, 0.59375, 0.5]
+Random Forest Default...
+[0.9566929133858267, 0.9166666666666666, 0.34375, 0.5]
+Naives Bayes...
+Fitting 5 folds for each of 100 candidates, totalling 500 fits
+Best Tuning Score is 0.44381353299699 with params {'naivebayes__alpha': 3.5111917342151275e-06}
+[0.9586614173228346, 0.72, 0.5625, 0.631578947368421]
+Naives Bayes Default...
+[0.937007874015748, 0.0, 0.0, 0.0]
+SVC...
+Fitting 5 folds for each of 484 candidates, totalling 2420 fits
+Best Tuning Score is 0.683830113241878 with params {'svc__C': 20.085536923187668, 'svc__class_weight': 'balanced', 'svc__gamma': 0.01, 'svc__kernel': 'sigmoid', 'svc__random_state': 20211010}
+[0.9468503937007874, 0.5581395348837209, 0.75, 0.6399999999999999]
+SVC Default...
+[0.9468503937007874, 0.7272727272727273, 0.25, 0.37209302325581395]
+Random Forest...
+Fitting 5 folds for each of 660 candidates, totalling 3300 fits
+Best Tuning Score is 0.5973762010347375 with params {'randomforest__class_weight': 'balanced', 'randomforest__max_depth': 5, 'randomforest__max_features': 'sqrt', 'randomforest__n_estimators': 400, 'randomforest__random_state': 20211010}
+[0.9409448818897638, 0.5294117647058824, 0.5625, 0.5454545454545455]
+Random Forest Default...
+[0.9429133858267716, 0.6363636363636364, 0.21875, 0.3255813953488372]
+Naives Bayes...
+Fitting 5 folds for each of 100 candidates, totalling 500 fits
+Best Tuning Score is 0.4561482540483466 with params {'naivebayes__alpha': 6.579332246575682e-08}
+[0.9507874015748031, 0.7333333333333333, 0.34375, 0.4680851063829787]
+Naives Bayes Default...
+[0.937007874015748, 0.0, 0.0, 0.0]
+
+Current Country: Philippines
+SVC...
+Fitting 5 folds for each of 484 candidates, totalling 2420 fits
+Best Tuning Score is 0.5206484731931174 with params {'svc__C': 2980.9579870417283, 'svc__class_weight': 'balanced', 'svc__gamma': 0.0001, 'svc__kernel': 'rbf', 'svc__random_state': 20211010}
+[0.948559670781893, 0.47058823529411764, 0.6956521739130435, 0.5614035087719297]
+SVC Default...
+[0.9629629629629629, 1.0, 0.21739130434782608, 0.3571428571428571]
+Random Forest...
+Fitting 5 folds for each of 660 candidates, totalling 3300 fits
+Best Tuning Score is 0.46231702510772277 with params {'randomforest__class_weight': 'balanced', 'randomforest__max_depth': 1, 'randomforest__max_features': 'log2', 'randomforest__n_estimators': 400, 'randomforest__random_state': 20211010}
+[0.9567901234567902, 1.0, 0.08695652173913043, 0.16]
+Random Forest Default...
+[0.9629629629629629, 0.8571428571428571, 0.2608695652173913, 0.4]
+Naives Bayes...
+Fitting 5 folds for each of 100 candidates, totalling 500 fits
+Best Tuning Score is 0.48155553301894766 with params {'naivebayes__alpha': 1.873817422860383e-05}
+[0.948559670781893, 0.4444444444444444, 0.34782608695652173, 0.3902439024390244]
+Naives Bayes Default...
+[0.9526748971193416, 0.0, 0.0, 0.0]
+SVC...
+Fitting 5 folds for each of 484 candidates, totalling 2420 fits
+Best Tuning Score is 0.5513322884012538 with params {'svc__C': 148.4131591025766, 'svc__class_weight': None, 'svc__gamma': 0.01, 'svc__kernel': 'rbf', 'svc__random_state': 20211010}
+[0.9609053497942387, 0.7, 0.30434782608695654, 0.42424242424242425]
+SVC Default...
+[0.9567901234567902, 0.75, 0.13043478260869565, 0.22222222222222218]
+Random Forest...
+Fitting 5 folds for each of 660 candidates, totalling 3300 fits
+Best Tuning Score is 0.4721958501268846 with params {'randomforest__class_weight': 'balanced', 'randomforest__max_depth': 5, 'randomforest__max_features': 'sqrt', 'randomforest__n_estimators': 1000, 'randomforest__random_state': 20211010}
+[0.9423868312757202, 0.4, 0.43478260869565216, 0.41666666666666663]
+Random Forest Default...
+[0.9526748971193416, 0.5, 0.13043478260869565, 0.20689655172413793]
+Naives Bayes...
+Fitting 5 folds for each of 100 candidates, totalling 500 fits
+Best Tuning Score is 0.4487388916930513 with params {'naivebayes__alpha': 1e-08}
+[0.9547325102880658, 0.5333333333333333, 0.34782608695652173, 0.4210526315789474]
+Naives Bayes Default...
+[0.9547325102880658, 1.0, 0.043478260869565216, 0.08333333333333333]
+SVC...
+Fitting 5 folds for each of 484 candidates, totalling 2420 fits
+Best Tuning Score is 0.5692680865449627 with params {'svc__C': 2980.9579870417283, 'svc__class_weight': None, 'svc__gamma': 0.001, 'svc__kernel': 'sigmoid', 'svc__random_state': 20211010}
+[0.9567901234567902, 0.5555555555555556, 0.43478260869565216, 0.4878048780487805]
+SVC Default...
+[0.9567901234567902, 0.6666666666666666, 0.17391304347826086, 0.27586206896551724]
+Random Forest...
+Fitting 5 folds for each of 660 candidates, totalling 3300 fits
+Best Tuning Score is 0.5169238019136599 with params {'randomforest__class_weight': 'balanced', 'randomforest__max_depth': 5, 'randomforest__max_features': 'log2', 'randomforest__n_estimators': 1000, 'randomforest__random_state': 20211010}
+[0.9403292181069959, 0.3125, 0.21739130434782608, 0.2564102564102564]
+Random Forest Default...
+[0.948559670781893, 0.375, 0.13043478260869565, 0.19354838709677416]
+Naives Bayes...
+Fitting 5 folds for each of 100 candidates, totalling 500 fits
+Best Tuning Score is 0.46465746676272995 with params {'naivebayes__alpha': 1.519911082952933e-09}
+[0.948559670781893, 0.42857142857142855, 0.2608695652173913, 0.3243243243243243]
+Naives Bayes Default...
+[0.9567901234567902, 1.0, 0.08695652173913043, 0.16]
+SVC...
+Fitting 5 folds for each of 484 candidates, totalling 2420 fits
+Best Tuning Score is 0.5474415463034958 with params {'svc__C': 20.085536923187668, 'svc__class_weight': 'balanced', 'svc__gamma': 0.01, 'svc__kernel': 'rbf', 'svc__random_state': 20211010}
+[0.9444444444444444, 0.4444444444444444, 0.6956521739130435, 0.5423728813559322]
+SVC Default...
+[0.9650205761316872, 0.875, 0.30434782608695654, 0.4516129032258065]
+Random Forest...
+Fitting 5 folds for each of 660 candidates, totalling 3300 fits
+Best Tuning Score is 0.45933205657343584 with params {'randomforest__class_weight': 'balanced', 'randomforest__max_depth': 5, 'randomforest__max_features': 'sqrt', 'randomforest__n_estimators': 150, 'randomforest__random_state': 20211010}
+[0.9465020576131687, 0.44, 0.4782608695652174, 0.4583333333333333]
+Random Forest Default...
+[0.9629629629629629, 0.7777777777777778, 0.30434782608695654, 0.43750000000000006]
+Naives Bayes...
+Fitting 5 folds for each of 100 candidates, totalling 500 fits
+Best Tuning Score is 0.44759878299351985 with params {'naivebayes__alpha': 1e-05}
+[0.9588477366255144, 0.6, 0.391304347826087, 0.47368421052631576]
+Naives Bayes Default...
+[0.9526748971193416, 0.0, 0.0, 0.0]
+SVC...
+Fitting 5 folds for each of 484 candidates, totalling 2420 fits
+Best Tuning Score is 0.5495726495726496 with params {'svc__C': 20.085536923187668, 'svc__class_weight': 'balanced', 'svc__gamma': 0.1, 'svc__kernel': 'rbf', 'svc__random_state': 20211010}
+[0.9567901234567902, 0.55, 0.4782608695652174, 0.5116279069767442]
+SVC Default...
+[0.9588477366255144, 0.8, 0.17391304347826086, 0.2857142857142857]
+Random Forest...
+Fitting 5 folds for each of 660 candidates, totalling 3300 fits
+Best Tuning Score is 0.46595481227834173 with params {'randomforest__class_weight': 'balanced', 'randomforest__max_depth': 5, 'randomforest__max_features': 'sqrt', 'randomforest__n_estimators': 100, 'randomforest__random_state': 20211010}
+[0.9444444444444444, 0.4, 0.34782608695652173, 0.37209302325581395]
+Random Forest Default...
+[0.9650205761316872, 0.875, 0.30434782608695654, 0.4516129032258065]
+Naives Bayes...
+Fitting 5 folds for each of 100 candidates, totalling 500 fits
+Best Tuning Score is 0.4617736365801381 with params {'naivebayes__alpha': 1.2328467394420635e-09}
+[0.9629629629629629, 0.6666666666666666, 0.43478260869565216, 0.5263157894736841]
+Naives Bayes Default...
+[0.9567901234567902, 1.0, 0.08695652173913043, 0.16]
+--- Begin Table 2 ---
+              Baseline      Country     F1
+0    Naive Bayes Tuned    Venezuela  0.308
+1  Naive Bayes Default    Venezuela  0.000
+2    Naive Bayes Tuned        Ghana  0.538
+3  Naive Bayes Default        Ghana  0.000
+4    Naive Bayes Tuned  Philippines  0.390
+5  Naive Bayes Default  Philippines  0.000
+                Baseline      Country     F1
+0    Random Forest Tuned    Venezuela  0.479
+1  Random Forest Default    Venezuela  0.237
+2    Random Forest Tuned        Ghana  0.603
+3  Random Forest Default        Ghana  0.341
+4    Random Forest Tuned  Philippines  0.160
+5  Random Forest Default  Philippines  0.400
+      Baseline      Country     F1
+0    SVM Tuned    Venezuela  0.465
+1  SVM Default    Venezuela  0.080
+2    SVM Tuned        Ghana  0.727
+3  SVM Default        Ghana  0.381
+4    SVM Tuned  Philippines  0.561
+5  SVM Default  Philippines  0.357
+--- End Table 2 ---
+--- Begin Table A4 ---
+        Country  alpha  Tuning F1  OOS F1
+0     Venezuela  0.002      0.331   0.308
+1     Venezuela  0.002      0.321   0.358
+2     Venezuela  0.004      0.347   0.344
+3     Venezuela  0.019      0.290   0.480
+4     Venezuela  0.004      0.340   0.333
+5         Ghana  0.000      0.512   0.538
+6         Ghana  0.000      0.457   0.522
+7         Ghana  0.000      0.452   0.415
+8         Ghana  0.000      0.444   0.632
+9         Ghana  0.000      0.456   0.468
+10  Philippines  0.000      0.482   0.390
+11  Philippines  0.000      0.449   0.421
+12  Philippines  0.000      0.465   0.324
+13  Philippines  0.000      0.448   0.474
+14  Philippines  0.000      0.462   0.526
+--- End Table A4 ---
+--- Begin Table A5 ---
+        Country   kernel         C class_weight   gamma  Tuning F1  OOS F1
+0     Venezuela      rbf     1.000     balanced     0.1      0.538   0.465
+1     Venezuela      rbf   403.429     balanced  0.0001      0.541   0.446
+2     Venezuela      rbf     1.000     balanced     0.1      0.558   0.500
+3     Venezuela      rbf   148.413     balanced    auto      0.499   0.531
+4     Venezuela  sigmoid    54.598     balanced   0.001      0.527   0.547
+5         Ghana      rbf    20.086     balanced    0.01      0.674   0.727
+6         Ghana      rbf  2980.958     balanced  0.0001      0.666   0.597
+7         Ghana  sigmoid     2.718     balanced     0.1      0.657   0.595
+8         Ghana      rbf   148.413     balanced   0.001      0.671   0.561
+9         Ghana  sigmoid    20.086     balanced    0.01      0.684   0.640
+10  Philippines      rbf  2980.958     balanced  0.0001      0.521   0.561
+11  Philippines      rbf   148.413         None    0.01      0.551   0.424
+12  Philippines  sigmoid  2980.958         None   0.001      0.569   0.488
+13  Philippines      rbf    20.086     balanced    0.01      0.547   0.542
+14  Philippines      rbf    20.086     balanced     0.1      0.550   0.512
+--- End Table A5 ---
+--- Begin Table A6 ---
+        Country max_depth n_estimators  ... max_features Tuning F1  OOS F1
+0     Venezuela         5         1000  ...         sqrt     0.486   0.479
+1     Venezuela         5          150  ...         sqrt     0.505   0.283
+2     Venezuela         5          400  ...         sqrt     0.469   0.516
+3     Venezuela         5          400  ...         sqrt     0.486   0.491
+4     Venezuela         5          200  ...         sqrt     0.480   0.420
+5         Ghana         5          100  ...         sqrt     0.599   0.603
+6         Ghana         5          200  ...         sqrt     0.592   0.472
+7         Ghana         5          150  ...         sqrt     0.611   0.551
+8         Ghana         5          150  ...         sqrt     0.581   0.500
+9         Ghana         5          400  ...         sqrt     0.597   0.545
+10  Philippines         1          400  ...         log2     0.462   0.160
+11  Philippines         5         1000  ...         sqrt     0.472   0.417
+12  Philippines         5         1000  ...         log2     0.517   0.256
+13  Philippines         5          150  ...         sqrt     0.459   0.458
+14  Philippines         5          100  ...         sqrt     0.466   0.372
+
+[15 rows x 7 columns]
+--- End Table A6 ---
