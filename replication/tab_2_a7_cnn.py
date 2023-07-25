@@ -57,7 +57,7 @@ if rerun:
 
 
     # initialize dictionary for countries/datasets
-    countries = {"Ghana": "raw/gh-tweets_full.csv", "Philippines": "raw/ph-tweets_full.csv", "Venezuela": "raw/vz-tweets_full.csv"}
+    countries = {"Ghana": "data/gh-tweets_full.csv", "Philippines": "data/ph-tweets_full.csv", "Venezuela": "data/vz-tweets_full.csv"}
 
     #run several times with different param settings and seeds
     seeds = [20210101, 20210102, 20210103]
