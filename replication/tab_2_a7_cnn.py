@@ -76,7 +76,7 @@ if rerun:
         stemmer = SpanishStemmer() if country == "Venezuela" else EnglishStemmer()
         results_current = []
 
-        #load pre-trained model for correct language, to-do: aus der schleife holen
+        #load pre-trained model for correct language
         if country == "Venezuela":
             w2v = w2v_es
         else:
