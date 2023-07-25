@@ -52,12 +52,12 @@ if rerun:
     os.environ["CUDA_VISIBLE_DEVICES"] = ""
 
     #load pre-trained model for correct language
-    # w2v_es = models.KeyedVectors.load_word2vec_format('sbw_vectors.bin', binary=True)
+    w2v_es = models.KeyedVectors.load_word2vec_format('sbw_vectors.bin', binary=True)
     w2v_en = api.load("word2vec-google-news-300")
 
 
     # initialize dictionary for countries/datasets
-    countries = {"Ghana": "raw/gh-tweets.csv", "Philippines": "raw/ph-tweets.csv"}
+    countries = {"Ghana": "raw/gh-tweets_full.csv", "Philippines": "raw/ph-tweets_full.csv", "Venezuela": "raw/vz-tweets_full.csv"}
 
     #run several times with different param settings and seeds
     seeds = [20210101, 20210102, 20210103]
@@ -98,8 +98,9 @@ if rerun:
             X_train_vec, X_train_tfidf, \
             X_test_vec, X_test_tfidf, \
             y_train_vec, y_test = embedding_transform(data, w2v,words, seed)
-
-            tuner = tune_model_cv(X_train_vec, y_train_vec, model= country+str(seed), runs=2, epochs=2)
+            
+            #tune model
+            tuner = tune_model_cv(X_train_vec, y_train_vec, model= country+str(seed), runs=50, epochs=200)
 
             #build model with best params
             best_hp = tuner.get_best_hyperparameters()[0]
@@ -111,7 +112,7 @@ if rerun:
             class_weight = {0: ratio_0, 1: ratio_1}
 
             #fit model
-            model.fit([X_train_vec, X_train_vec, X_train_vec], y_train_vec, epochs=2, batch_size=64, class_weight=class_weight, verbose=0)
+            model.fit([X_train_vec, X_train_vec, X_train_vec], y_train_vec, epochs=200, batch_size=64, class_weight=class_weight, verbose=0)
 
             #classify sequences
             y_pred = model.predict([X_test_vec, X_test_vec, X_test_vec])
@@ -125,7 +126,7 @@ if rerun:
             #default parameters
             default_param = {"name": "default",
                             "batch_size":64,
-                            "epochs":2,
+                            "epochs":200,
                             "filters":200,
                             "kernel":[1,2,3],
                             "dropout":0.5,
