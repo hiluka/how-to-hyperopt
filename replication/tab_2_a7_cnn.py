@@ -3,19 +3,6 @@
 # Christian Arnold, Luka Biedebach, Andreas Küpfer, and Marcel Neunhoeffer
 #--------------------------------------------------------------------------------
 
-#IMPORTS for Baselines
-from functions import load_data, preprocess_data, run_svc, run_dummy, run_randomforest, run_naivebayes
-import numpy as np
-np.set_printoptions(precision=15)
-import pandas as pd
-from nltk.corpus import stopwords
-from nltk.stem.snowball import EnglishStemmer, SpanishStemmer
-
-import nltk
-nltk.download('stopwords')
-nltk.download('punkt')
-
-# IMPORTS for CNN
 import os
 import tensorflow as tf
 import keras.backend as K
@@ -35,7 +22,7 @@ from keras.wrappers.scikit_learn import KerasClassifier
 from gensim import models
 import gensim.downloader as api
 
-from functions import *
+from utils.functions import *
 
 import argparse
 
