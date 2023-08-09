@@ -25,6 +25,9 @@ import gensim.downloader as api
 from utils.functions import *
 
 import argparse
+import requests
+from tqdm import tqdm
+import shutil
 
 parser = argparse.ArgumentParser(description='"Run CNN code.')
 parser.add_argument('--rerun', action='store_true', help='Rerun tuning completely')
@@ -33,6 +36,27 @@ args = parser.parse_args()
 rerun = args.rerun
 
 if rerun:
+    # Begin Download and extract spanish word embeddings #
+    url = 'https://cs.famaf.unc.edu.ar/~ccardellino/SBWCE/SBW-vectors-300-min5.bin.gz'
+    output_path = 'sbw_vectors.bin.gz'
+    extracted_path = 'sbw_vectors.bin'
+    # Check if embeddings already exist
+    if os.path.exists(output_path):
+        print(f"{output_path} already exists.")
+    else:
+        print(f"Downloading spanish word embeddings...")
+        response = requests.get(url, stream=True)
+        file_size = int(response.headers.get('content-length', 0))
+        chunk_size = 1024 * 1024 * 10  # 10MB
+        with open(output_path, 'wb') as file, tqdm(desc=output_path, total=file_size, unit='B', unit_scale=True, unit_divisor=1024) as bar:
+            for data in response.iter_content(chunk_size=chunk_size):
+                size = file.write(data)
+                bar.update(size)
+        print(f"Extracting spanish word embeddings...")
+        with gzip.open(output_path, 'rb') as f_in:
+            with open(extracted_path, 'wb') as f_out:
+                shutil.copyfileobj(f_in, f_out)
+    #  End Download and extract spanish word embeddings #
     
     print("Rerun flag true: tuning in progress...")
     
