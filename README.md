@@ -60,7 +60,7 @@ In order to run the CNN replication (files tab_2_A4_A5_A6.ipynb or tab_2_a4_a5_a
 
 The most convenient way to replicate all the information depicted in all tables and figures is the following:
 - Run RMarkdown file "fig_1_tab_1.Rmd" (Figure 1 and Table 1)
-- Create conda envrionment for Python dependencies (see above)
+- Create conda environment for Python dependencies (see above)
 - Run Python file "tab_2_a4_a5_a6_a7.py" (Figure 2, A4, A5, A6, and A7)
 
 The combined tuning for all models takes up to 48 hours (tested on a M1 Mac).
