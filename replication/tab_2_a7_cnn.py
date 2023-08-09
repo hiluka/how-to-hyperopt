@@ -41,8 +41,8 @@ if rerun:
     output_path = 'sbw_vectors.bin.gz'
     extracted_path = 'sbw_vectors.bin'
     # Check if embeddings already exist
-    if os.path.exists(output_path):
-        print(f"{output_path} already exists.")
+    if os.path.exists(extracted_path):
+        print(f"{extracted_path} already exists.")
     else:
         print(f"Downloading spanish word embeddings...")
         response = requests.get(url, stream=True)
